@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>UP Browser Extension Example</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/web3@4.1.1/dist/web3.min.js"></script>
+  </head>
+  <body>
+    <h1>UP Browser Extension Example</h1>
+    <button id="connectButton">Connect to UP Extension</button>
+    <p>Connected Address: <span id="connectedAddress"></span></p>
+
+    <script>
+      document
+        .getElementById("connectButton")
+        .addEventListener("click", connectToUPExtension);
+
+      // Function to connect to the UP Extension
+      async function connectToUPExtension() {
+        try {
+          // Check if the UP Extension is installed
+          if (window.ethereum) {
+            // Initialize a blockchain provider with UP Extension
+            const web3 = new Web3(window.ethereum);
+
+            // Request access to accounts
+            const accountsRequest = await web3.eth.requestAccounts();
+            const accounts = await web3.eth.getAccounts();
+
+            // Display the connected address
+            const connectedAddress = accounts[0];
+            document.getElementById("connectedAddress").textContent =
+              connectedAddress;
+
+            // Now you can use 'web3' to interact with the dApp
+          } else {
+            alert("UP Extension is not installed.");
+          }
+        } catch (error) {
+          console.error("Error connecting to UP Extension:", error);
+        }
+      }
+
+      // Attach the connectToUPExtension function to the button click event
+      document
+        .getElementById("connectButton")
+        .addEventListener("click", connectToUPExtension);
+    </script>
+  </body>
+</html>
